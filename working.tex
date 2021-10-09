@@ -9,76 +9,198 @@
 \usepackage{xcolor}
 \usepackage[colorlinks=true, urlcolor=blue, pdfborder={0 0 0}]{hyperref}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+		T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{An efficient implementation of Graph Clustering on GPU\\}
+	\title{An efficient implementation of Graph Clustering\\ on GPU\\}
 
-\author{\IEEEauthorblockN{Rudraksh Kashyap - 11840970}
-\IEEEauthorblockA{\textit{Dept. of EECS} \\
-\textit{IIT Bhilai}\\
-Kota(Rajasthan), India \\
-\href{mailto:rudrakshk@iitbhilai.ac.in}{rudrakshk@iitbhilai.ac.in}}
-\and
-\IEEEauthorblockN{Ashish Kumar Suraj - 11840230}
-\IEEEauthorblockA{\textit{Dept. of EECS} \\
-\textit{IIT Bhilai}\\
-Barabanki(UP), India \\
-\href{mailto:ashishs@iitbhilai.ac.in}{ashishs@iitbhilai.ac.in}}
-}
+	\author{\IEEEauthorblockN{Rudraksh Kashyap - 11840970}
+		\IEEEauthorblockA{\textit{Dept. of EECS} \\
+			\textit{IIT Bhilai}\\
+			Kota(Rajasthan), India \\
+			\href{mailto:rudrakshk@iitbhilai.ac.in}{rudrakshk@iitbhilai.ac.in}}
+		\and
+		\IEEEauthorblockN{Ashish Kumar Suraj - 11840230}
+		\IEEEauthorblockA{\textit{Dept. of EECS} \\
+			\textit{IIT Bhilai}\\
+			Barabanki(UP), India \\
+			\href{mailto:ashishs@iitbhilai.ac.in}{ashishs@iitbhilai.ac.in}}
+	}
 
-\maketitle
-
-
-% Abstract should specify your problem statement and key contributions in brief.
-\begin{abstract}
-The objective of graph clustering is to identify the community structure of the graph,
-specifically the community membership for each node in the graph.
-\end{abstract}
-
-% The Introduction section should (1) explain your problem statement, (2) motivate the problem with its importance and limitations of the existing solutions (3) briefly explain your key approach/contributions.
-\section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits.
+	\maketitle
 
 
-\section*{Acknowledgment}
+	% Abstract should specify your problem statement and key contributions in brief.
+	\begin{abstract}
+		The objective of graph clustering is to identify the community structure of the graph, specifically the community membership for each node in the graph. Graph  processing  has  always  been  a  challenge,  as there  are  inherent  complexities  in  it. There are several implementations for parallel processing on the GPU systems. So the problem is to identify the optimal clusters in a larger graph using parallel programming. Although graph partition is a NP-hard problem, but existing relaxation methods provide reasonable approximate solutions in reasonable time. But the scalability with increasing
+graph size of such solutions remains a challenge. In this project,
+we try to find new techniques to speed up the stochastic
+block partition algorithm.
+	\end{abstract}
 
-The preferred spelling of the word ``acknowledgment'' in America is without
-an ``e'' after the ``g''. Avoid the stilted expression ``one of us (R. B.
-G.) thanks $\ldots$''. Instead, try ``R. B. G. thanks$\ldots$''. Put sponsor
-acknowledgments in the unnumbered footnote on the first page.
+	% The Introduction section should (1) explain your problem statement, (2) motivate the problem with its importance and limitations of the existing solutions (3) briefly explain your key approach/contributions.
+	\section{Introduction}
+	Graph clustering refers to clustering of data in the form of graphs. Finding the clusters in a large graph is important to understand the underlying relationships between the nodes. Clustering helps in understanding the natural grouping in a dataset. Graph data has come to play a critical role in a diverse
+array of applications, particularly when looking for hidden or
+complex relationship structures and activities. But performance
+and scalability remain challenging issues because the computational complexity of many traditional algorithms, including
+graph partitioning (also known as community detection) is NP-
+hard. For graph partitioning, the development of approximation
+algorithms \cite{b1} has been critical in finding feasible solutions
+for real-world datasets. Unfortunately, there are major scalability challenges even for approximation algorithms. These
+challenges are made even more difficult for graph partitioning
+when the number of communities is not known a priori and
+there are no a priori cues about the membership of some of
+the nodes.
 
-\section*{References}
+	There are a lot of clustering algorithms for the data to be compiled. Such as based on Topology algorithms, Edge Betweenness Clustering, Biconnected Components Clustering, k-means Clustering, Hirarchic Clustering and so on. Also there are lot of papers out there which are written in the same field.
+\\
 
-Please number citations consecutively within brackets \cite{b1}. The
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
+	Previous IEEE HPEC \href{https://graphchallenge.mit.edu/}{GraphChallenge} works have used
+a shared memory Louvain implementation and spectral
+clustering methods to achieve substantial speedups in partitioning performance over the baseline stochastic block
+partition algorithm. In this proposal, we focus on improving the
+algorithmic performance of stochastic block partition.\\
 
-Number footnotes separately in superscripts. Place the actual footnote at
-the bottom of the column in which it was cited. Do not put footnotes in the
-abstract or reference list. Use letters for table footnotes.
+The contributions of our work are as follows:
 
-Unless there are six authors or more give all authors' names; do not use
-``et al.''. Papers that have not been published, even if they have been
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers
-that have been accepted for publication should be cited as ``in press'' \cite{b5}.
-Capitalize only the first word in a paper title, except for proper nouns and
-element symbols.
+\begin{itemize}
+	\item  The design and implementation of optimization
+	techniques for stochastic block partitioning in Python
+	that carefully manage
+	the amount of parallelism during different phases of
+	the algorithm.
 
-For papers published in translation journals, please give the English
-citation first, followed by the original foreign-language citation \cite{b6}.
+	\item A performance study that evaluates the performance
+	of our implementation against a parallel baseline implementation.\\
+\end{itemize}
 
-\begin{thebibliography}{00}
-\bibitem{b1} G. Eason, B. Noble, and I. N. Sneddon, ``On certain integrals of Lipschitz-Hankel type involving products of Bessel functions,'' Phil. Trans. Roy. Soc. London, vol. A247, pp. 529--551, April 1955.
-\bibitem{b2} J. Clerk Maxwell, A Treatise on Electricity and Magnetism, 3rd ed., vol. 2. Oxford: Clarendon, 1892, pp.68--73.
-\bibitem{b3} I. S. Jacobs and C. P. Bean, ``Fine particles, thin films and exchange anisotropy,'' in Magnetism, vol. III, G. T. Rado and H. Suhl, Eds. New York: Academic, 1963, pp. 271--350.
-\bibitem{b4} K. Elissa, ``Title of paper if known,'' unpublished.
-\bibitem{b5} R. Nicole, ``Title of paper with only first word capitalized,'' J. Name Stand. Abbrev., in press.
-\bibitem{b6} Y. Yorozu, M. Hirano, K. Oka, and Y. Tagawa, ``Electron spectroscopy studies on magneto-optical media and plastic substrate interface,'' IEEE Transl. J. Magn. Japan, vol. 2, pp. 740--741, August 1987 [Digests 9th Annual Conf. Magnetics Japan, p. 301, 1982].
-\bibitem{b7} M. Young, The Technical Writer's Handbook. Mill Valley, CA: University Science, 1989.
-\end{thebibliography}
-\vspace{12pt}
+The rest of the proposal is outlined as follows. Section II provides an overview of the stochastic block partition algorithm
+and details of our optimization technique. Section III presents a evaluation methodology for our technique and approach. Finally, related work, their limitations and how our approach is different is mentioned in Section IV.
+
+	\section{Approach}
+
+		In this project we are planning to efficiently parllize \href{https://github.com/graphchallenge/GraphChallenge/tree/master/StochasticBlockPartition}{ \textbf{Stochastic block partition algorithm} }, which forms the
+GraphChallenge baseline, uses a generative statistical model
+based on work by Peixoto \cite{b2}, \cite{b3}, \cite{b4} and builds on the
+work from Karrer and Newman \cite{b5}. Implementation in any language of the baseline algorithm has excellent single-threaded performance on small graphs, but scaling this performance is difficult. The algorithm has two
+	challenges: the optimal number of blocks is not known a
+	priori, and neither is the assignment of each node to a block. To overcome these challenges, the static algorithm uses an
+	entropy measurement function which measures the quality of
+	a partition for a given number of blocks. Once it finds the
+	optimal partitioning at a particular number of target blocks
+	and the associated entropy, it can compare that entropy against
+	future partitions at a different number of target blocks.
+
+	In particular, the block phases of the algorithm work as
+	follows, where $N$ refers to the number of nodes in the graph.
+	It first finds optimal partitions and entropies for partition sizes
+	$\frac{N}{2}$, $\frac{N}{4}$, $\frac{N}{8}$, $\ldots$ , until a valley is found where further reductions
+	in block size no longer produce decreases in entropy. When
+	this minimum entropy is bracketed between two partition
+	sizes, the algorithm switches to a Golden section search
+	to find the final partition and entropy. To find the optimal
+	partition for a given number of blocks, the algorithm goes
+	from a larger partition size to a smaller one. It does this using
+	two distinct program operations – \textit{agglomerative merging} and
+	\textit{nodal movements}.
+
+	During an agglomerative merge, two existing candidate
+	blocks are found by greedily picking the merge with the
+	lowest resulting entropy. Each agglomerative merge takes two
+	communities and puts them together as one, resulting in one
+	fewer number of blocks. Once the algorithm reaches the target
+	number of blocks, it switches to performing nodal moves that
+	can reassign a vertex from one block to another. Movements that result
+	in large decreases in entropy are likely to be accepted, and
+	movements that do not are unlikely to be accepted. The
+	overall algorithm proceeds in this manner, alternating between
+	agglomerative merges and nodal movements at each block
+	phase. When the overall change in entropy stabilizes for a
+	particular number of blocks, the algorithm stops movements
+	for that partition size and goes to the next target block number.\cite{b6}, \cite{b7} The overall complexity of the baseline algorithm is
+	$O(E\ \text{log}^2 E)$ \cite{b8}. One advantage of stochastic approaches is that more complex rules that govern the goodness of communities in different
+application domains can be easily adapted to a stochastic
+method.
+\\
+
+\textit{Parallelism in above algorithm -}\\
+Unlike agglomerative merges, nodal movements affect one
+node at a time rather than entire communities. Such behavior
+makes them write-intensive and difficult to parallelize. Furthermore, the quality of nodal updates for one worker depends
+on the timely incorporation of updates from other workers.
+Our baseline implementation will avoids expensive global updates
+to the shared interblock edge count matrix by having each
+worker thread maintain its own copy of the data structure. We
+will try to designed our implementation to carefully manage
+the granularity of messages, both from the workers to the
+main aggregator and back to each worker, to minimize the
+amount of data transferred. This parallel nodal movement
+design uses a pool of worker processes, each responsible for
+a group of vertices, which finds nodal movement proposals
+for that group, computes the associated acceptance probability,
+and ultimately accepts or rejects the proposals. Each worker
+reports the changes in the state back to the main aggregator
+for efficient distribution to the other workers.
+
+We will try to program this approach(taken from the paper of winners of GraphChallenge2021, thanks to them) for a configurable
+number of move threads and merge threads and will try to vary one while holding the other constant and then note the time taken.
+\\
+
+
+	\section{Evaluation Methodology}
+
+	For the evaluation of the techniques, we are planning to start with our fast parallel stochastic block partition implementation written in Python. Our implementation might be using NumPy\cite{b9} for low-level array operations, and on Python multiprocessing parallel operation. We are going to use latest available version of Python and Numby. Most of the times we shall use kaggle or google colab for conducting our experiments and we may as well use our machine(if possible) for light weight datasets. We may also use \href{https://graph-tool.skewed.de/}{Graph-tool} which is an efficient Python module for manipulation and statistical analysis of graphs.
+
+	One straightforward measure of algorithm performance
+is the amount of time used to perform partitioning. We will aim to
+instrumented our code in such a way that it only will measure just the time spent during computation, ignoring overheads such as graph load time from disk.\\
+
+	Input data set analysis can be of different types as interval, ordinal or categorical. We shall start our experiment with graphs having less number of nodes and then gradually we shall increase the complexity of the graph. Dataset for the Streaming Graph Challenge: Stochastic Block Partition can be found \href{https://graphchallenge.mit.edu/data-sets#PartitionDatasets}{here}.\\
+
+	\section{Related Work}
+	Previous IEEE HPEC \href{https://graphchallenge.mit.edu/}{GraphChallenge} works have used
+a shared memory Louvain implementation and spectral
+clustering methods to achieve substantial speedups in partitioning performance over the baseline stochastic block
+partition algorithm.\\
+	Other recent work shows the advantage of using
+	sampling compared to modularity minimization \cite{b10}. Our work
+	will be complementary to this approach since the core data structure
+	and algorithmic operations remain the same and we will try to implement the winning solution of GraphChallenge2021 approach.\\
+
+
+
+	\begin{thebibliography}{00}
+		\bibitem{b1} Y. Jin and J. F. Jaja, “A high performance implementation of spectral
+clustering on cpu-gpu platforms,” in Parallel and Distributed Processing
+Symposium Workshops, 2016 IEEE International. IEEE, 2016, pp.
+825–834.
+\bibitem{b2} T. P. Peixoto, “Entropy of stochastic blockmodel ensembles,” Physical
+Review E, vol. 85, no. 5, p. 056122, 2012.
+\bibitem{b3} ——, “Parsimonious module inference in large networks,” Physical
+review letters, vol. 110, no. 14, p. 148701, 2013.
+\bibitem{b4} ——, “Efficient monte carlo and greedy heuristic for the inference of
+stochastic block models,” Physical Review E, vol. 89, no. 1, p. 012804,
+2014.
+\bibitem{b5} B. Karrer and M. E. Newman, “Stochastic blockmodels and community
+structure in networks,” Physical review E, vol. 83, no. 1, p. 016107,
+2011.
+\bibitem{b6} N. Metropolis, A. W. Rosenbluth, M. N. Rosenbluth, A. H. Teller, and
+E. Teller, “Equation of state calculations by fast computing machines,”
+The journal of chemical physics, vol. 21, no. 6, pp. 1087–1092, 1953.
+\bibitem{b7} W. K. Hastings, “Monte carlo sampling methods using markov chains
+and their applications,” Biometrika, vol. 57, no. 1, pp. 97–109, 1970.
+\bibitem{b8} E. Kao, V. Gadepally, M. Hurley, M. Jones, J. Kepner, S. Mohindra, P. Monticciolo, A. Reuther, S. Samsi, W. Song, and et al.,
+“Streaming graph challenge: Stochastic block partition,” 2017 IEEE
+High Performance Extreme Computing Conference (HPEC), Sep 2017.
+[Online]. Available: http://dx.doi.org/10.1109/HPEC.2017.8091040
+\bibitem{b9} S. v. d. Walt, S. C. Colbert, and G. Varoquaux, “The numpy array: a
+structure for efficient numerical computation,” Computing in Science
+Engineering, vol. 13, no. 2, pp. 22–30, 2011.
+\bibitem{b10} F. Wanye, V. Gleyzer, and W.-c. Feng, “Fast stochastic block partition-
+ing via sampling,” in 2019 IEEE High Performance Extreme Computing
+Conference (HPEC). IEEE, 2019, pp. 1–7.
+	\end{thebibliography}
+	\vspace{12pt}
 
 \end{document}
